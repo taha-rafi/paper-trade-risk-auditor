@@ -4,6 +4,12 @@ Compliant with x402 v2 payment specifications on Base Mainnet (eip155:8453).
 """
 import json
 import time
+import os
+import sys
+
+# Ensure parent directory is in python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse
 from core.auditor import RiskAuditor
