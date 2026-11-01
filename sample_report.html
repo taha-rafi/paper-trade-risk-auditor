@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade History Risk Audit Report</title>
+    <style>
+    :root {
+        --bg-primary: #0d1117;
+        --bg-secondary: #161b22;
+        --bg-card: #21262d;
+        --border-color: #30363d;
+        --text-primary: #f0f6fc;
+        --text-secondary: #8b949e;
+        --accent-blue: #58a6ff;
+        --accent-green: #3fb950;
+        --accent-red: #f85149;
+        --accent-orange: #d29922;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        padding: 32px 16px;
+        line-height: 1.5;
+    }
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .header {
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 24px;
+        margin-bottom: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    .header h1 { font-size: 26px; font-weight: 700; color: #fff; }
+    .header .meta { font-size: 13px; color: var(--text-secondary); }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+    .card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 18px;
+    }
+    .card-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+    .card-val {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+    }
+    .card-val.positive { color: var(--accent-green); }
+    .card-val.negative { color: var(--accent-red); }
+    .card-sub {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-top: 4px;
+    }
+    .alert-box {
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin-bottom: 32px;
+        border: 1px solid;
+    }
+    .alert-warning {
+        background-color: rgba(210, 153, 34, 0.1);
+        border-color: var(--accent-orange);
+        color: #f1e05a;
+    }
+    .alert-warning ul { margin-left: 20px; margin-top: 8px; font-size: 14px; }
+    .alert-success {
+        background-color: rgba(63, 185, 80, 0.1);
+        border-color: var(--accent-green);
+        color: var(--accent-green);
+    }
+    .alert-header { font-weight: 600; font-size: 15px; }
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #fff;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 32px;
+    }
+    th, td {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border-color);
+        text-align: left;
+    }
+    th {
+        background-color: var(--bg-card);
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+    tr:last-child td { border-bottom: none; }
+    .text-right { text-align: right; }
+    .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    .badge-buy { background: rgba(63, 185, 80, 0.2); color: var(--accent-green); }
+    .badge-sell { background: rgba(248, 81, 73, 0.2); color: var(--accent-red); }
+    .footer {
+        border-top: 1px solid var(--border-color);
+        padding-top: 20px;
+        font-size: 12px;
+        color: var(--text-secondary);
+        display: flex;
+        justify-content: space-between;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Trade History Risk Audit Report</h1>
+            <div class="meta">Deterministic FIFO Risk Audit Engine • High-Water Mark Drawdown Tracking</div>
+        </div>
+        <div class="meta text-right">
+            Generated: <strong>2026-11-01 05:32:43 UTC</strong><br>
+            Ledger Records: <strong>12</strong>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-label">Net Realized PnL</div>
+            <div class="card-val positive">+$676.69</div>
+            <div class="card-sub">Gross: +$690.00 | Fees: $13.31</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Ending Equity</div>
+            <div class="card-val">$10,676.69</div>
+            <div class="card-sub">Started at $10,000.00</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Maximum Drawdown</div>
+            <div class="card-val negative">1.08%</div>
+            <div class="card-sub">Peak-to-Trough: $111.77</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Win Rate & Factor</div>
+            <div class="card-val">85.7%</div>
+            <div class="card-sub">Profit Factor: 20.71 (6W / 1L)</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Max Asset Exposure</div>
+            <div class="card-val">65.0%</div>
+            <div class="card-sub">Peak single-asset concentration</div>
+        </div>
+    </div>
+
+    
+        <div class="alert-box alert-success">
+            <div class="alert-header">✅ Clean Ledger Integrity Verified</div>
+            <p>No short-selling, non-chronological executions, or lot matching anomalies detected.</p>
+        </div>
+        
+
+    <div class="section-title">Audited Trade History (First 12 Records)</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Timestamp</th>
+                <th>Symbol</th>
+                <th>Side</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-right">Fee</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td><code>ord_001</code></td>
+            <td>2026-10-25T10:00:00Z</td>
+            <td><strong>BTCUSDT</strong></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td class="text-right">$65,000.00</td>
+            <td class="text-right">0.1000</td>
+            <td class="text-right">$1.50</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_002</code></td>
+            <td>2026-10-25T14:30:00Z</td>
+            <td><strong>ETHUSDT</strong></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td class="text-right">$2,500.00</td>
+            <td class="text-right">1.0000</td>
+            <td class="text-right">$0.75</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_003</code></td>
+            <td>2026-10-26T09:15:00Z</td>
+            <td><strong>BTCUSDT</strong></td>
+            <td><span class="badge badge-sell">SELL</span></td>
+            <td class="text-right">$67,000.00</td>
+            <td class="text-right">0.0500</td>
+            <td class="text-right">$1.55</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_004</code></td>
+            <td>2026-10-26T18:00:00Z</td>
+            <td><strong>SOLUSDT</strong></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td class="text-right">$175.00</td>
+            <td class="text-right">10.0000</td>
+            <td class="text-right">$0.50</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_005</code></td>
+            <td>2026-10-27T11:20:00Z</td>
+            <td><strong>ETHUSDT</strong></td>
+            <td><span class="badge badge-sell">SELL</span></td>
+            <td class="text-right">$2,620.00</td>
+            <td class="text-right">1.0000</td>
+            <td class="text-right">$0.80</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_006</code></td>
+            <td>2026-10-27T15:45:00Z</td>
+            <td><strong>SOLUSDT</strong></td>
+            <td><span class="badge badge-sell">SELL</span></td>
+            <td class="text-right">$168.00</td>
+            <td class="text-right">5.0000</td>
+            <td class="text-right">$0.25</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_007</code></td>
+            <td>2026-10-28T08:00:00Z</td>
+            <td><strong>BTCUSDT</strong></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td class="text-right">$66,200.00</td>
+            <td class="text-right">0.0500</td>
+            <td class="text-right">$1.52</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_008</code></td>
+            <td>2026-10-28T16:10:00Z</td>
+            <td><strong>SOLUSDT</strong></td>
+            <td><span class="badge badge-sell">SELL</span></td>
+            <td class="text-right">$182.00</td>
+            <td class="text-right">5.0000</td>
+            <td class="text-right">$0.27</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_009</code></td>
+            <td>2026-10-29T12:00:00Z</td>
+            <td><strong>BTCUSDT</strong></td>
+            <td><span class="badge badge-sell">SELL</span></td>
+            <td class="text-right">$68,500.00</td>
+            <td class="text-right">0.1000</td>
+            <td class="text-right">$3.15</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_010</code></td>
+            <td>2026-10-30T09:30:00Z</td>
+            <td><strong>ETHUSDT</strong></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td class="text-right">$2,480.00</td>
+            <td class="text-right">2.0000</td>
+            <td class="text-right">$1.48</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_011</code></td>
+            <td>2026-10-30T17:00:00Z</td>
+            <td><strong>ETHUSDT</strong></td>
+            <td><span class="badge badge-sell">SELL</span></td>
+            <td class="text-right">$2,550.00</td>
+            <td class="text-right">1.0000</td>
+            <td class="text-right">$0.76</td>
+        </tr>
+        
+        <tr>
+            <td><code>ord_012</code></td>
+            <td>2026-10-31T11:00:00Z</td>
+            <td><strong>ETHUSDT</strong></td>
+            <td><span class="badge badge-sell">SELL</span></td>
+            <td class="text-right">$2,590.00</td>
+            <td class="text-right">1.0000</td>
+            <td class="text-right">$0.78</td>
+        </tr>
+        
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div>Paper Trade Risk Auditor v2.0.0 • Verified Deterministic Engine</div>
+        <div>Settlement Facilitator: Base USDC (<code>eip155:8453</code>)</div>
+    </div>
+</div>
+</body>
+</html>

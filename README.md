@@ -1,13 +1,55 @@
 # Paper Trade Risk Audit API & Engine
 
-[![Tests](https://img.shields.io/badge/tests-10%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-15%20passed-brightgreen.svg)]()
 [![Standard](https://img.shields.io/badge/accounting-FIFO-blue.svg)]()
-[![Payment](https://img.shields.io/badge/x402-v2%20Compliant-orange.svg)]()
+[![CLI](https://img.shields.io/badge/cli-CSV%20to%20HTML%20Report-orange.svg)]()
 [![Network](https://img.shields.io/badge/network-Base%20(8453)-purple.svg)]()
 
-A high-performance, deterministic trade ledger risk auditor and verification engine designed for quantitative hedge funds, algorithmic trading bots, and backtest analysis.
+A high-performance, deterministic trade ledger risk auditor and verification engine designed for quantitative funds, algorithmic trading bots, and backtest analysis.
 
 Built by **Taha Rafi** (`@taha-rafi`).
+
+---
+
+## What's New in v2.1.0
+- **One-Command CSV-to-HTML Workflow:** Ingest any standard trade history CSV file and generate a publication-grade, self-contained HTML5 dark-theme executive audit report.
+- **Strict Ingestion Validation:** Schema enforcement, empty file guards, malformed numeric value checks, duplicate order ID detection, and non-chronological execution alerts.
+- **Zero-Dependency Reports:** Embeds all styling inline; zero external CDN dependencies, fully offline & firewall safe.
+
+---
+
+## Quickstart: CLI Audit Workflow
+
+### 1. Ingest CSV Ledger and Generate Executive Reports
+```bash
+python cli.py audit sample_trades.csv --equity 10000 --html audit_report.html --json audit_report.json
+```
+
+Output:
+```text
+[*] Ingesting CSV trade ledger from: sample_trades.csv
+[+] Successfully validated 12 trade records.
+[*] Running FIFO cost-basis audit with initial equity of $10,000.00...
+
+==================================================
+          AUDIT EXECUTIVE SUMMARY
+==================================================
+Total Trades Audited:        12
+Initial Equity:              $10,000.00
+Final Equity:                $10,676.69
+Net Realized PnL:            $676.69
+Total Execution Fees:        $13.31
+Win Rate:                    85.7% (6W / 1L)
+Profit Factor:               20.71
+Max Drawdown:                1.08% ($111.77)
+Max Single-Asset Exposure:   65.0%
+Integrity Flags Detected:    0
+==================================================
+
+[+] Standalone HTML report generated: audit_report.html
+[+] Raw JSON metrics exported: audit_report.json
+[+] Audit completed successfully.
+```
 
 ---
 
@@ -20,54 +62,21 @@ Built by **Taha Rafi** (`@taha-rafi`).
   - Short-selling / overselling detection.
   - Non-chronological timestamp validation.
   - Negative or zero price/quantity payload validation.
-- **x402 v2 Payment Architecture:** Enterprise endpoints protected by standard HTTP 402 Payment Required headers on Base Mainnet (`eip155:8453`) USDC.
+- **x402 Payment Architecture:** Enterprise endpoints protected by standard HTTP 402 Payment Required headers on Base Mainnet (`eip155:8453`) USDC.
 
 ---
 
-## Architecture & Mathematical Specification
+## Commercial Fixed-Price Development Services
 
-### 1. FIFO Lot Matching
-For each sell transaction with quantity $Q_{sell}$ at price $P_{sell}$, open buy lots $(P_{buy, i}, Q_{buy, i})$ are matched sequentially:
+I offer fixed-price Python trading tools, trade ledger auditing, and API integrations:
 
-$$\text{Gross PnL} = \sum_{i} \min(Q_{remaining}, Q_{buy, i}) \times (P_{sell} - P_{buy, i})$$
+| Service | Price | Deliverables |
+|---|---|---|
+| **Trade History Risk Audit** | **$35 USDC** | Full FIFO audit of your supplied CSV ledger, net P&L, cumulative fee accounting, peak drawdown analysis, exposure concentration flags, and a self-contained executive HTML report. |
+| **Paper Trading Bot Setup** | **$25 USDC** | Complete local setup of a simulated trading engine with public Binance live market data feed, SMA crossover strategy, and 2% risk stop-loss. |
+| **Python API Integration & Fix** | **$45 USDC** | Turnkey bug fix, data pipeline integration, or REST API endpoint with unit test suite. |
 
-### 2. High-Water Mark and Drawdown
-$$\text{Equity}_t = \text{Cash}_t + \sum_{j} \text{Position}_j \times P_{latest, j}$$
-$$\text{HWM}_t = \max_{0 \le s \le t} \text{Equity}_s$$
-$$\text{Drawdown}_t = \frac{\text{HWM}_t - \text{Equity}_t}{\text{HWM}_t}$$
-
----
-
-## API Endpoints
-
-### 1. `GET /health`
-Returns live service status, uptime, and authorized payment rails.
-```bash
-curl -X GET http://localhost:8088/health
-```
-
-### 2. `GET /example`
-Returns a verified worked example input and expected audit output.
-```bash
-curl -X GET http://localhost:8088/example
-```
-
-### 3. `POST /audit` (Open Tier)
-Deterministic audit of submitted JSON trade ledger.
-```bash
-curl -X POST http://localhost:8088/audit \
-  -H "Content-Type: application/json" \
-  -d '{
-    "initial_equity": 10000.0,
-    "trades": [
-      {"timestamp": "2026-10-31T10:00:00Z", "symbol": "BTCUSDT", "side": "BUY", "price": 70000.0, "quantity": 0.1, "fee": 7.0},
-      {"timestamp": "2026-10-31T12:00:00Z", "symbol": "BTCUSDT", "side": "SELL", "price": 72000.0, "quantity": 0.1, "fee": 7.2}
-    ]
-  }'
-```
-
-### 4. `POST /api/v2/audit` (x402 Enterprise Protected Tier)
-Requires `X-Payment-Proof` header referencing a verified Base USDC transaction to `0x8e9FB1b87c06170993FB42916bAe7aC675c47675`.
+Payments accepted directly via USDC on Base Mainnet (`0x8e9FB1b87c06170993FB42916bAe7aC675c47675`) or via x402 on-chain escrow.
 
 ---
 
@@ -75,4 +84,4 @@ Requires `X-Payment-Proof` header referencing a verified Base USDC transaction t
 ```bash
 python -m unittest discover -s tests
 ```
-10 comprehensive unit tests verifying FIFO matching, short-selling detection, drawdown calculation, and error handling.
+15 unit tests verifying FIFO matching, short-selling detection, drawdown calculation, CSV schema validation, and HTML report rendering.
